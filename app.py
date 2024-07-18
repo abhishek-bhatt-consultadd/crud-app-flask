@@ -104,5 +104,17 @@ def update_medicine(id):
     db.session.commit()
     return jsonify({"message": "Medicine updated successfully"}), 200
 
+@app.route('/medicine/<int:id>', methods=['GET'])
+def getSpecificId(id):
+    medicine = Medicine.query.get(id)
+    if medicine :
+        return {
+        'id': medicine.id,
+        'title': medicine.title,
+        'company': medicine.company,
+    }, 200
+    else :
+        abort(404, description="Medicine not found")
+
 if __name__ == '__main__':
     app.run(debug=True)
